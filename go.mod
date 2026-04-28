@@ -1,3 +1,3 @@
-module github.com/watp/sdk-go
+module github.com/wortic-tecnologia/watp-sdk-go
 
 go 1.22

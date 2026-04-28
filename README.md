@@ -63,7 +63,7 @@ package main
 import (
     "fmt"
 
-    "github.com/watp/sdk-go"
+    "github.com/wortic-tecnologia/watp-sdk-go"
 )
 
 func main() {

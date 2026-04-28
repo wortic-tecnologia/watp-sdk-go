@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/watp/sdk-go"
+	"github.com/wortic-tecnologia/watp-sdk-go"
 )
 
 func main() {

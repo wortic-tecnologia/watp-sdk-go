@@ -106,13 +106,10 @@ func TestProtocolFixturesConformance(t *testing.T) {
 		t.Run(fileName, func(t *testing.T) {
 			t.Parallel()
 
-			raw, err := os.ReadFile(filepath.Join("..", "..", "protocol", "fixtures", fileName))
-			if err != nil {
-				t.Fatalf("ReadFile() error = %v", err)
-			}
+			raw := readProtocolFixture(t, fileName)
 
 			var envelope Envelope
-			err = json.Unmarshal(raw, &envelope)
+			err := json.Unmarshal(raw, &envelope)
 			if shouldPass && err != nil {
 				t.Fatalf("expected valid fixture, got error = %v", err)
 			}
@@ -134,6 +131,25 @@ func TestProtocolFixturesConformance(t *testing.T) {
 			}
 		})
 	}
+}
+
+func readProtocolFixture(t *testing.T, fileName string) []byte {
+	t.Helper()
+
+	candidates := []string{
+		filepath.Join("..", "..", "protocol", "fixtures", fileName),
+		filepath.Join("protocol", "fixtures", fileName),
+	}
+
+	for _, candidate := range candidates {
+		raw, err := os.ReadFile(candidate)
+		if err == nil {
+			return raw
+		}
+	}
+
+	t.Fatalf("protocol fixture %s not found in %v", fileName, candidates)
+	return nil
 }
 
 func TestNodeSignatureMatchesSharedVector(t *testing.T) {
